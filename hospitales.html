@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Centros de ayuda y hospitales — Bolivia (por departamento)</title>
+  <style>
+    :root{
+      --bg:#fff;
+      --card:#f8f0ff;
+      --accent:#e07ca0;
+      --accent2:#c49de0;
+      --muted:#555555;
+      --radius:12px;
+      --maxw:1200px;
+      --shadow:0 6px 20px rgba(224,124,160,0.08);
+    }
+    *{box-sizing:border-box;}
+    body{
+      font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Arial;
+      margin:0; background:var(--bg); color:#07203b; display:flex; justify-content:center; padding:28px;
+    }
+    .wrap{width:100%; max-width:var(--maxw);}
+    header{display:flex; gap:16px; align-items:center; margin-bottom:18px;}
+    .logo{
+      width:72px;height:72px;
+      background:linear-gradient(135deg, var(--accent), var(--accent2));
+      border-radius:14px; display:flex; align-items:center; justify-content:center; color:#fff;
+    }
+    h1{font-size:20px;margin:0; color:var(--accent);}
+    p.lead{margin:6px 0 0;color:var(--muted);}
+    .intro{background:var(--card); padding:16px; border-radius:var(--radius); box-shadow:var(--shadow); margin-bottom:18px;}
+    .departamentos{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:14px;}
+    .dept-card{background:linear-gradient(180deg,#f9e8ff,#f3e0ff); border-radius:12px; padding:12px; box-shadow:0 6px 18px rgba(196,157,224,.06); cursor:pointer; transition:transform .18s, box-shadow .18s}
+    .dept-card:hover{transform:translateY(-6px); box-shadow:0 14px 36px rgba(196,157,224,.12)}
+    .dept-inner{display:flex; gap:12px; align-items:center}
+    .dept-icon{width:56px;height:56px; border-radius:10px; background:#fff; display:flex; align-items:center; justify-content:center; color:#000}
+    .dept-name{font-weight:800; color:var(--accent)}
+    .centros-wrap{margin-top:18px}
+    .center-card{display:flex; gap:12px; align-items:flex-start; background:var(--card); border-radius:10px; padding:12px; box-shadow:0 4px 16px rgba(196,157,224,.08); transition:box-shadow .16s, transform .16s; margin-bottom:12px}
+    .center-card:hover{box-shadow:0 12px 32px rgba(224,124,160,.12); transform:translateY(-4px)}
+    .center-icon{width:56px;height:56px;border-radius:10px;background:#fff; display:flex; align-items:center; justify-content:center; color:#000}
+    .center-info{flex:1}
+    .center-name{font-weight:800;margin:0; color:var(--accent)}
+    .center-addr{color:var(--muted);margin:6px 0}
+    .center-phone a{display:inline-block;background:linear-gradient(135deg, var(--accent), var(--accent2));color:#fff;padding:8px 10px;border-radius:8px;text-decoration:none;font-weight:700}
+    .center-actions{display:flex; gap:8px; align-items:center}
+    .no-centers{padding:16px; background:#fff0f4; border:1px solid #ffcce0; border-radius:10px; color:#9b1b1b}
+    /* modal */
+    .modal{position:fixed; inset:0; display:none; align-items:center; justify-content:center; background:rgba(0,0,0,.45); z-index:999;}
+    .modal.active{display:flex}
+    .modal-box{background:#fff; border-radius:10px; padding:18px; width:92%; max-width:640px; box-shadow:0 8px 28px rgba(224,124,160,.12);}
+    textarea, input[type=text]{width:100%; padding:10px; border-radius:8px; border:1px solid #ddd; font-family:inherit; margin-bottom:8px;}
+    .btn{background:linear-gradient(135deg, var(--accent), var(--accent2)); color:#fff; border:none; padding:10px 14px; border-radius:8px; cursor:pointer; font-weight:800}
+    .btn.ghost{background:#fff; color:var(--accent); border:1px solid rgba(224,124,160,.12)}
+    footer{margin-top:18px;color:var(--muted);font-size:13px}
+    @media (max-width:640px){.departamentos{grid-template-columns:repeat(1,1fr)}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="logo" aria-hidden>
+        <svg width="44" height="44" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L2 7v13h20V7L12 2zM11 14H9v2H7v-2H5v-2h2v-2h2v2h2v2zm1-7h2v2h-2V7z"/></svg>
+      </div>
+      <div>
+        <h1>Centros de rehabilitación y hospitales que atienden violencia — Bolivia</h1>
+        <p class="lead">Selecciona un departamento para ver los centros de rehabilitación, hospitales y organizaciones que ofrecen atención a víctimas de violencia (dirección / zona y teléfono).</p>
+      </div>
+    </header>
+
+    <section class="intro">
+      <strong>Atención:</strong> si estás en peligro llama a la línea de emergencias local o a la línea nacional de protección. <br>
+      Línea de orientación (referencia): <strong>Familia Segura 800 11 3040</strong>
+    </section>
+
+    <section class="departamentos" id="departamentos">
+      <div class="dept-card" onclick="abrirDept('laPaz')">
+        <div class="dept-inner">
+          <div class="dept-icon" aria-hidden>
+            <svg width="30" height="30" viewBox="0 0 24 24"><path fill="#000" d="M12 2L2 7v13h20V7L12 2z"/></svg>
+          </div>
+          <div><div class="dept-name">La Paz</div><div class="dept-desc">La Paz / El Alto</div></div>
+        </div>
+      </div>
+
+      <div class="dept-card" onclick="abrirDept('cochabamba')">
+        <div class="dept-inner">
+          <div class="dept-icon"><svg width="30" height="30" viewBox="0 0 24 24"><path fill="#000" d="M12 2L2 8v14h20V8L12 2z"/></svg></div>
+          <div><div class="dept-name">Cochabamba</div><div class="dept-desc">Cochabamba</div></div>
+        </div>
+      </div>
+
+      <div class="dept-card" onclick="abrirDept('santaCruz')">
+        <div class="dept-inner">
+          <div class="dept-icon"><svg width="30" height="30" viewBox="0 0 24 24"><path fill="#000" d="M12 3L4 8v12h16V8l-8-5z"/></svg></div>
+          <div><div class="dept-name">Santa Cruz</div><div class="dept-desc">Santa Cruz de la Sierra</div></div>
+        </div>
+      </div>
+
+      <div class="dept-card" onclick="abrirDept('oruro')">
+        <div class="dept-inner">
+          <div class="dept-icon"><svg width="30" height="30" viewBox="0 0 24 24"><path fill="#000" d="M12 2L2 7v13h20V7L12 2z"/></svg></div>
+          <div><div class="dept-name">Oruro</div><div class="dept-desc">Oruro</div></div>
+        </div>
+      </div>
+
+      <div class="dept-card" onclick="abrirDept('potosi')">
+        <div class="dept-inner">
+          <div class="dept-icon"><svg width="30" height="30" viewBox="0 0 24 24"><path fill="#000" d="M12 2L2 7v13h20V7L12 2z"/></svg></div>
+          <div><div class="dept-name">Potosí</div><div class="dept-desc">Potosí</div></div>
+        </div>
+      </div>
+
+      <div class="dept-card" onclick="abrirDept('tarija')">
+        <div class="dept-inner">
+          <div class="dept-icon"><svg width="30" height="30" viewBox="0 0 24 24"><path fill="#000" d="M12 3L4 8v12h16V8l-8-5z"/></svg></div>
+          <div><div class="dept-name">Tarija</div><div class="dept-desc">Tarija</div></div>
+        </div>
+      </div>
+
+      <div class="dept-card" onclick="abrirDept('chuquisaca')">
+        <div class="dept-inner">
+          <div class="dept-icon"><svg width="30" height="30" viewBox="0 0 24 24"><path fill="#000" d="M12 2L2 8v14h20V8L12 2z"/></svg></div>
+          <div><div class="dept-name">Chuquisaca (Sucre)</div><div class="dept-desc">Sucre</div></div>
+        </div>
+      </div>
+
+      <div class="dept-card" onclick="abrirDept('beni')">
+        <div class="dept-inner">
+          <div class="dept-icon"><svg width="30" height="30" viewBox="0 0 24 24"><path fill="#000" d="M12 3L4 8v12h16V8l-8-5z"/></svg></div>
+          <div><div class="dept-name">Beni</div><div class="dept-desc">Trinidad</div></div>
+        </div>
+      </div>
+
+      <div class="dept-card" onclick="abrirDept('pando')">
+        <div class="dept-inner">
+          <div class="dept-icon"><svg width="30" height="30" viewBox="0 0 24 24"><path fill="#000" d="M12 2L2 7v13h20V7L12 2z"/></svg></div>
+          <div><div class="dept-name">Pando</div><div class="dept-desc">Cobija</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="centros-wrap" id="centrosWrap">
+      <!-- Los centros se insertan desde JavaScript -->
+    </section>
+
+    <footer>
+      <p>Fuentes y referencias: Ministerio de Salud, SEDES departamentales, sitios oficiales y páginas institucionales/ONG. Ver lista de fuentes al pie o en la documentación del proyecto.</p>
+    </footer>
+  </div>
+
+  <!-- Modal para enviar mensaje/solicitud (simulado) -->
+  <div class="modal" id="modal">
+    <div class="modal-box">
+      <h2 id="modalTitle">Solicitar ayuda / Mensaje</h2>
+      <p id="modalDept"></p>
+      <input id="nombre" placeholder="Tu nombre (opcional)">
+      <textarea id="mensaje" placeholder="Escribe tu solicitud o mensaje..."></textarea>
+      <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:10px">
+        <button class="btn ghost" onclick="cerrarModal()">Cancelar</button>
+        <button class="btn" onclick="enviarMensaje()">Enviar</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Datos actualizados (hecho un esfuerzo por verificar en fuentes públicas).
+    // Donde aparece "Consultar SEDES / fuente oficial" significa que no encontré un teléfono público fiable en la página oficial o que la fuente recomienda contactar SEDES.
+    const data = {
+      laPaz: [
+        {
+          name: 'Hospital de la Mujer - La Paz',
+          addr: 'Complejo Miraflores, La Paz',
+          phone: 'Consultar SEDES La Paz',
+          note: 'Atención ginecológica y acompañamiento a víctimas; confirma por SEDES La Paz.' 
+          // FUENTE: SEDES / MINSALUD (ver referencias).
+        },
+        {
+          name: 'CEPAT - Centro Especializado Prevención y Atención (La Paz)',
+          addr: 'Oficina programa CEPAT / SEDES La Paz',
+          phone: 'Consultar SEDES La Paz',
+          note: 'Centro especializado para atención terapéutica a víctimas (coordinar con SEDES).'
+          // FUENTE: SEDES La Paz / CEPAT. :contentReference[oaicite:5]{index=5}
+        },
+        {
+          name: 'REMAR - Centro de Rehabilitación (REMAR Bolivia)',
+          addr: 'Sedes regionales (La Paz) - ver contacto oficial',
+          phone: '+591 70531007',
+          note: 'Organización REMAR Bolivia — contacto nacional y redes. (confirmar sede exacta antes de acudir).'
+          // FUENTE: REMAR Bolivia sitio oficial. :contentReference[oaicite:6]{index=6}
+        }
+      ],
+      cochabamba: [
+        {
+          name: 'Centro de Atención a la Mujer (CAM) - Cochabamba',
+          addr: 'Oficina CAM Cochabamba (Sacaba / Cochabamba) — confirmar sede',
+          phone: '+591 4496012 / +591 76970468',
+          note: 'Línea gratuita 800 13 0005 (CAM) — atención legal y psicosocial.' 
+          // FUENTE: CAM (datos de contacto publicados). :contentReference[oaicite:7]{index=7}
+        },
+        {
+          name: 'Hospital del Niño - Manuel Ascencio Villarroel (Cochabamba)',
+          addr: 'Av. Aniceto Arce Nº435, Cochabamba', 
+          phone: '+591 70782085',
+          note: 'Atención pediátrica y apoyo en casos de violencia infantil. Confirma horarios y móviles.'
+          // FUENTE: ficha / registros de establecimientos. :contentReference[oaicite:8]{index=8}
+        },
+        {
+          name: 'Centro Comunitario / CAIF - Cochabamba',
+          addr: 'Sedes municipales (ver municipalidad / CAIF Cochabamba)',
+          phone: 'Consultar municipalidad / CAIF local',
+          note: 'Servicio comunitario de apoyo y rehabilitación.'
+        }
+      ],
+      santaCruz: [
+        {
+          name: 'Clínica de Emergencias Cardenal Maurer - Santa Cruz',
+          addr: 'Av. Melchor Pinto #103, Santa Cruz',
+          phone: '+591 76009188',
+          note: 'Clínica privada con servicio de emergencias; confirmar atención en violencia.' 
+          // FUENTE: clínica Maurer (web oficial). :contentReference[oaicite:9]{index=9}
+        },
+        {
+          name: 'Hospital Japonés (Santa Cruz) - Tercer Nivel',
+          addr: 'Av. Japón s/n (Tercer Anillo), Santa Cruz de la Sierra',
+          phone: '+591 3 3462031 / +591 3 3462032',
+          note: 'Hospital público regional — consultas y emergencia. Ver teléfonos centrales.'
+          // FUENTE: listado institucional / páginas del hospital. :contentReference[oaicite:10]{index=10}
+        },
+        {
+          name: 'Centro Municipal de Rehabilitación - Santa Cruz (GAM)',
+          addr: 'Dirección municipal (consultar web GAM Santa Cruz)',
+          phone: 'Consultar GAM Santa Cruz',
+          note: 'Programas municipales de rehabilitación y reinserción.'
+        }
+      ],
+      oruro: [
+        {
+          name: 'Hospital General de Oruro',
+          addr: 'Plaza 10 de Febrero, centro, Oruro',
+          phone: 'Consultar SEDES Oruro',
+          note: 'Atención médica y referencia en violencia; confirmar teléfono en SEDES Oruro.'
+        },
+        {
+          name: 'Centros locales de atención - Oruro',
+          addr: 'Sedes municipales / SEDES Oruro',
+          phone: 'Consultar SEDES Oruro',
+          note: 'Contactar SEDES para programas específicos.'
+        }
+      ],
+      potosi: [
+        {
+          name: 'Hospital Daniel Bracamonte - Potosí',
+          addr: 'Chaca s/n, Potosí (consultar ubicación exacta)',
+          phone: 'Consultar SEDES Potosí',
+          note: 'Atención médica y referenciación de casos de violencia.'
+        },
+        {
+          name: 'Servicios municipales / SEDES Potosí',
+          addr: 'Oficinas municipales (Plaza 10 de Noviembre)',
+          phone: 'Consultar SEDES Potosí',
+          note: 'Servicios de apoyo y orientación.'
+        }
+      ],
+      tarija: [
+        {
+          name: 'Hospital Regional San Juan de Dios - Tarija',
+          addr: 'Plaza Luis de Fuentes y Vargas (Centro), Tarija',
+          phone: 'Consultar SEDES Tarija',
+          note: 'Atención general y valoración de violencia.'
+        },
+        {
+          name: 'Servicios municipales de atención a la mujer - Tarija',
+          addr: 'Oficinas municipales',
+          phone: 'Consultar municipio / SEDES Tarija',
+          note: 'Apoyo psicosocial y legal.'
+        }
+      ],
+      chuquisaca: [
+        {
+          name: 'Hospital Monseñor Jesús Pérez - Sucre',
+          addr: 'C. Calvo No.381, Sucre',
+          phone: 'Consultar SEDES Chuquisaca',
+          note: 'Atención médica y referencia.'
+        },
+        {
+          name: 'Casa de la Mujer - Sucre (ONG)',
+          addr: 'Oficinas locales (ver casadelamujer.org.bo)',
+          phone: '+591 3453040',
+          note: 'Atención, asesoría y refugio; confirmar horarios y servicios.' 
+          // FUENTE: Casa de la Mujer (mención en datos/ONG locales)
+        }
+      ],
+      beni: [
+        {
+          name: 'Hospital Trinidad - Beni',
+          addr: 'Av. 6 de Agosto, Trinidad',
+          phone: 'Consultar SEDES Beni',
+          note: 'Atención hospitalaria y emergencias.'
+        },
+        {
+          name: 'Centros locales de apoyo - Beni',
+          addr: 'Sedes municipales',
+          phone: 'Consultar SEDES Beni',
+          note: 'Contactar municipalidad / SEDES para detalles.'
+        }
+      ],
+      pando: [
+        {
+          name: 'Hospital Roberto Galindo - Cobija (Pando)',
+          addr: 'Av. Mariscal Santa Cruz, Cobija',
+          phone: 'Consultar SEDES Pando',
+          note: 'Atención pública regional; confirmar teléfono en SEDES Pando.'
+        },
+        {
+          name: 'Servicios locales / SEDES Pando',
+          addr: 'Oficina departamental (Cobija)',
+          phone: 'Consultar SEDES Pando',
+          note: 'Apoyo y orientación.'
+        }
+      ]
+    };
+
+    // Render centers into DOM when user enters un departamento
+    function abrirDept(deptKey){
+      const wrap = document.getElementById('centrosWrap');
+      wrap.innerHTML = '';
+      const list = data[deptKey];
+      const title = document.createElement('h2');
+      const friendlyName = {
+        laPaz: 'La Paz (La Paz y El Alto)',
+        cochabamba: 'Cochabamba',
+        santaCruz: 'Santa Cruz',
+        oruro: 'Oruro',
+        potosi: 'Potosí',
+        tarija: 'Tarija',
+        chuquisaca: 'Chuquisaca (Sucre)',
+        beni: 'Beni (Trinidad)',
+        pando: 'Pando (Cobija)'
+      }[deptKey] || deptKey;
+      title.innerText = friendlyName;
+      title.style.color = 'var(--accent)';
+      title.style.marginTop = '18px';
+      wrap.appendChild(title);
+
+      if(!list || list.length===0){
+        const no = document.createElement('div');
+        no.className = 'no-centers';
+        no.innerText = 'No se encuentran centros de rehabilitación u organizaciones especializadas en violencia en este departamento (según fuentes consultadas). Revisa hospitales generales listados o contacta la línea nacional de atención.';
+        wrap.appendChild(no);
+        return;
+      }
+
+      list.forEach(c => {
+        const card = document.createElement('div');
+        card.className = 'center-card';
+        const phoneDisplay = c.phone && c.phone.startsWith('+') ? c.phone : escapeHtml(String(c.phone || 'Consultar'));
+        const telHref = (c.phone && c.phone.startsWith('+')) ? `tel:${c.phone}` : '#';
+        card.innerHTML = `
+          <div class="center-icon" aria-hidden>
+            <svg width="32" height="32" viewBox="0 0 24 24"><path fill="#000" d="M12 2L2 7v13h20V7L12 2z"/></svg>
+          </div>
+          <div class="center-info">
+            <p class="center-name">${escapeHtml(c.name)}</p>
+            <p class="center-addr">📍 ${escapeHtml(c.addr)}</p>
+            <p class="center-phone">☎️ ${ c.phone && c.phone.startsWith('+') ? `<a href="${telHref}">${escapeHtml(c.phone)}</a>` : escapeHtml(String(c.phone || 'Consultar SEDES / fuente oficial')) }</p>
+            <p class="center-note" style="color:var(--muted);margin-top:6px">${escapeHtml(c.note || '')}</p>
+          </div>
+          <div class="center-actions">
+            <button class="btn" onclick="abrirModal('${escapeJs(c.name)}','${escapeJs(friendlyName)}')">Entrar / Solicitar ayuda</button>
+          </div>
+        `;
+        wrap.appendChild(card);
+      });
+
+      title.scrollIntoView({behavior:'smooth', block:'start'});
+    }
+
+    // Modal logic (simulado)
+    function abrirModal(centerName, deptName){
+      document.getElementById('modalTitle').innerText = 'Solicitud / Mensaje — ' + centerName;
+      document.getElementById('modalDept').innerText = deptName;
+      document.getElementById('modal').classList.add('active');
+    }
+    function cerrarModal(){
+      document.getElementById('modal').classList.remove('active');
+      document.getElementById('mensaje').value = '';
+      document.getElementById('nombre').value = '';
+    }
+    function enviarMensaje(){
+      const nombre = document.getElementById('nombre').value.trim();
+      const msg = document.getElementById('mensaje').value.trim();
+      if(!msg){ alert('Por favor escribe tu mensaje antes de enviar.'); return; }
+      cerrarModal();
+      alert('Mensaje enviado (simulado). Si necesitas atención inmediata llama a la línea de emergencias o a la línea nacional de apoyo.');
+    }
+
+    function escapeHtml(text){ if(text === undefined || text === null) return ''; return String(text).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"}[c]; }); }
+    function escapeJs(text){ return String(text||'').replace(/'/g,"\\'"); }
+
+    // mostrar La Paz por defecto
+    abrirDept('laPaz');
+  </script>
+</body>
+</html>

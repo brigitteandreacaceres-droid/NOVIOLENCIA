@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Material Interactivo - BRI-X-TAC</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { width:100%; height:100%; font-family:Arial,sans-serif; overflow:hidden; }
+#app { width:100%; height:100%; display:flex; flex-direction:column; }
+
+header {
+  background-color: #ff3366;
+  color:white;
+  text-align:center;
+  padding:20px;
+  flex-shrink:0;
+}
+
+main {
+  flex:1;
+  overflow:auto;
+  background: linear-gradient(180deg,#f8f8fa,#ffffff);
+  padding:20px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:20px;
+}
+
+h1,h2,h3,h4 { color:#ff3366; }
+
+.floating-card {
+  width:90%;
+  background:#fff0f5;
+  border-left:5px solid #ff3366;
+  padding:20px;
+  border-radius:12px;
+  box-shadow:0 6px 18px rgba(0,0,0,0.08);
+}
+
+.book-carousel {
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:20px;
+}
+
+.book-carousel a {
+  text-decoration:none;
+}
+
+.book-img { width:120px; height:160px; border-radius:8px; transition:transform 0.3s; display:block; }
+.book-img:hover { transform:scale(1.1); }
+
+.btn {
+  background:#ff3366;
+  color:white;
+  padding:10px 20px;
+  border-radius:8px;
+  text-decoration:none;
+  display:inline-block;
+  margin-top:10px;
+  cursor:pointer;
+}
+
+footer {
+  background:#ff3366;
+  color:white;
+  text-align:center;
+  padding:15px;
+  flex-shrink:0;
+}
+
+/* --- Sopa de letras --- */
+#puzzle-modal {
+  position:fixed; inset:0; display:none; justify-content:center; align-items:center;
+  background:rgba(0,0,0,0.6); z-index:9999;
+}
+#puzzle-content {
+  background:white; border-radius:12px; padding:20px; width:min(90%,900px); text-align:center;
+  display:flex; flex-direction:row; justify-content:center; align-items:flex-start; gap:20px;
+}
+#puzzle-board {
+  display:grid;
+  gap:2px;
+  background:#ddd;
+  border-radius:12px;
+}
+.cell {
+  width:35px; height:35px;
+  display:flex; justify-content:center; align-items:center;
+  font-weight:bold; font-size:18px;
+  border:1px solid #bbb;
+  cursor:pointer;
+  user-select:none;
+}
+.cell.selected { background:#ff3366; color:white; }
+.cell.found { background:#2b9a6a; color:white; }
+#timer { font-weight:bold; color:#ff3366; margin-top:10px; font-size:1.2rem; text-align:center; }
+#puzzle-message { margin-top:15px; font-weight:bold; color:#2b9a6a; font-size:1.1rem; text-align:center; }
+#word-list { display:flex; flex-direction:column; gap:10px; max-height:400px; overflow:auto; }
+.word-item { background:#ffccd5; padding:5px 10px; border-radius:8px; font-weight:bold; color:#ff3366; cursor:pointer; text-align:center; }
+.word-item.found { background:#2b9a6a; color:white; text-decoration:line-through; }
+.word-item.found::after { content:" ENCONTRADO"; font-weight:bold; margin-left:5px; color:white; }
+
+#exitBtn {
+  margin-top:15px;
+  background:#631946;
+  color:white;
+  padding:8px 15px;
+  border-radius:8px;
+  cursor:pointer;
+}
+#exitBtn:hover { background:#552055; }
+
+/* --- Modal de Testimonio --- */
+#testimonio-modal {
+  position:fixed; inset:0;
+  display:none; justify-content:center; align-items:center;
+  background:rgba(0,0,0,0.7);
+  z-index:9999;
+}
+#testimonio-content {
+  background:white;
+  border-radius:12px;
+  padding:20px;
+  text-align:center;
+  max-width:90%;
+}
+#testimonio-content img {
+  width:400px;       /* tamaño normal */
+  max-width:100%;
+  height:auto;
+  border-radius:12px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.3);
+}
+#closeTestimonio {
+  margin-top:15px;
+  background:#631946;
+  color:white;
+  padding:8px 15px;
+  border-radius:8px;
+  cursor:pointer;
+}
+#closeTestimonio:hover { background:#552055; }
+</style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <h1>Material Interactivo - BRI-X-TAC</h1>
+    <p>Recursos educativos para aprender a prevenir la violencia</p>
+  </header>
+
+  <main>
+    <div class="floating-card">
+      <h2>📝 Sopa de Letras Educativa</h2>
+      <p>Selecciona las letras en el tablero para encontrar las palabras relacionadas con “No a la violencia”. Tienes 3 minutos.</p>
+      <button class="btn" id="startPuzzleBtn">Comenzar Juego</button>
+    </div>
+
+    <div class="floating-card">
+      <h2>📚 Libros y Guías Recomendadas</h2>
+      <div class="book-carousel">
+        <a href="https://redclade.org/wp-content/uploads/Violencia-de-g%C3%A9nero-en-las-escuelas-caminos-para-su-prevenci%C3%B3n-y-superaci%C3%B3n.pdf" target="_blank">
+          <img src="libro0.png" class="book-img">
+          <div style="text-align:center; margin-top:5px; color:#ff3366; font-weight:bold;">Libro 1</div>
+        </a>
+        <a href="https://www.savethechildren.es/sites/default/files/imce/cuento-dejame-en-paz_carmen-gil.pdf" target="_blank">
+          <img src="libro1.png" class="book-img">
+          <div style="text-align:center; margin-top:5px; color:#ff3366; font-weight:bold;">Libro 2</div>
+        </a>
+      </div>
+    </div>
+
+    <div class="floating-card">
+      <h2>💡 Consejos y Acciones</h2>
+      <ul>
+        <li>Siempre denunciar casos de violencia.</li>
+        <li>No responder con agresión, buscar soluciones pacíficas.</li>
+        <li>Escuchar y acompañar a la persona afectada.</li>
+        <li>Educar sobre respeto, igualdad y empatía.</li>
+      </ul>
+    </div>
+
+    <div class="floating-card">
+      <h2>🎥 Video Educativo</h2>
+      <a href="prevencion.mp4" class="btn" target="_blank">Ver Video</a>
+    </div>
+
+    <!-- NUEVA SECCIÓN DEL TESTIMONIO -->
+    <div class="floating-card">
+      <h2>🩷 Testimonio de una sobreviviente víctima de violencia</h2>
+      <button class="btn" id="openTestimonioBtn">Ver Testimonio</button>
+    </div>
+  </main>
+
+  <footer>© 2025 BRI-X-TAC | Unidos por una vida sin violencia</footer>
+</div>
+
+<!-- Ventana del juego -->
+<div id="puzzle-modal">
+  <div id="puzzle-content">
+    <div>
+      <h3>Sopa de Letras</h3>
+      <div id="timer">Tiempo restante: 03:00</div>
+      <div id="puzzle-board"></div>
+      <div id="puzzle-message"></div>
+      <button id="exitBtn">Salir del Juego</button>
+    </div>
+    <div id="word-list"></div>
+  </div>
+</div>
+
+<!-- Ventana del Testimonio -->
+<div id="testimonio-modal">
+  <div id="testimonio-content">
+    <img src="testimonio.png" alt="Testimonio de una sobreviviente">
+    <div><button id="closeTestimonio">Cerrar</button></div>
+  </div>
+</div>
+
+<!-- Audio Correcto -->
+<audio id="correctSound">
+  <source src="correct.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+(function(){
+  const startBtn = document.getElementById("startPuzzleBtn");
+  const modal = document.getElementById("puzzle-modal");
+  const board = document.getElementById("puzzle-board");
+  const timerEl = document.getElementById("timer");
+  const messageEl = document.getElementById("puzzle-message");
+  const wordListEl = document.getElementById("word-list");
+  const correctSound = document.getElementById("correctSound");
+  const exitBtn = document.getElementById("exitBtn");
+
+  const gridSize = 12;
+  const words = ["PAZ","RESPETO","AMOR","DIÁLOGO","AYUDA","IGUALDAD","COMUNIDAD","SOLIDARIDAD","NO","VIOLENCIA"];
+  let grid = [];
+  let timeLeft = 180;
+  let timer;
+  let selectedCells = [];
+  let foundWords = [];
+
+  startBtn.addEventListener("click",()=>{ modal.style.display="flex"; startGame(); });
+  
+  exitBtn.addEventListener("click", ()=> {
+    modal.style.display="none";
+    clearInterval(timer);
+  });
+
+  function startGame(){
+    board.innerHTML="";
+    wordListEl.innerHTML="";
+    messageEl.textContent="";
+    clearInterval(timer);
+    timeLeft = 180;
+    timerEl.textContent = formatTime(timeLeft);
+    selectedCells = [];
+    foundWords = [];
+    grid = Array.from({length:gridSize},()=>Array(gridSize).fill(""));
+
+    // generar tablero
+    words.forEach(word=>{
+      let placed=false;
+      while(!placed){
+        const dir = Math.random()<0.5?"H":"V";
+        const r = Math.floor(Math.random()*gridSize);
+        const c = Math.floor(Math.random()*gridSize);
+        if(dir==="H" && c+word.length<=gridSize){
+          if(word.split("").every((l,i)=>!grid[r][c+i])){
+            for(let i=0;i<word.length;i++) grid[r][c+i]=word[i];
+            placed=true;
+          }
+        } else if(dir==="V" && r+word.length<=gridSize){
+          if(word.split("").every((l,i)=>!grid[r+i][c])){
+            for(let i=0;i<word.length;i++) grid[r+i][c]=word[i];
+            placed=true;
+          }
+        }
+      }
+    });
+
+    // llenar resto con letras aleatorias
+    for(let r=0;r<gridSize;r++){
+      for(let c=0;c<gridSize;c++){
+        if(!grid[r][c]) grid[r][c]=String.fromCharCode(65+Math.floor(Math.random()*26));
+      }
+    }
+
+    board.style.gridTemplateColumns = `repeat(${gridSize}, 35px)`;
+    board.style.gridTemplateRows = `repeat(${gridSize}, 35px)`;
+
+    for(let r=0;r<gridSize;r++){
+      for(let c=0;c<gridSize;c++){
+        const cell = document.createElement("div");
+        cell.className="cell";
+        cell.textContent = grid[r][c];
+        cell.dataset.r = r;
+        cell.dataset.c = c;
+        cell.addEventListener("click", ()=> selectCell(cell));
+        board.appendChild(cell);
+      }
+    }
+
+    // lista de palabras
+    words.forEach(w=>{
+      const div = document.createElement("div");
+      div.textContent=w;
+      div.className="word-item";
+      wordListEl.appendChild(div);
+    });
+
+    timer = setInterval(()=>{
+      timeLeft--;
+      timerEl.textContent = formatTime(timeLeft);
+      if(timeLeft<=0){
+        clearInterval(timer);
+        messageEl.textContent="¡Tiempo agotado! ⏰";
+      }
+    },1000);
+  }
+
+  function selectCell(cell){
+    if(cell.classList.contains("found")) return;
+
+    if(cell.classList.contains("selected")){
+      cell.classList.remove("selected");
+      selectedCells = selectedCells.filter(c=>c!==cell);
+    } else {
+      cell.classList.add("selected");
+      selectedCells.push(cell);
+    }
+
+    if(selectedCells.length>1){
+      const letters = selectedCells.map(c=>c.textContent).join("");
+      const reversed = selectedCells.map(c=>c.textContent).reverse().join("");
+
+      const match = words.find(w => w===letters || w===reversed);
+      if(match && !foundWords.includes(match)){
+        correctSound.currentTime = 0;
+        correctSound.play();
+
+        selectedCells.forEach(c=>c.classList.add("found"));
+        selectedCells.forEach(c=>c.classList.remove("selected"));
+        selectedCells = [];
+
+        Array.from(wordListEl.children).forEach(item=>{
+          if(item.textContent===match) item.classList.add("found");
+        });
+
+        foundWords.push(match);
+        checkCompletion();
+      }
+    }
+  }
+
+  function checkCompletion(){
+    if(foundWords.length===words.length){
+      clearInterval(timer);
+      messageEl.textContent="¡Felicidades! 🎉 Has encontrado todas las palabras.";
+    }
+  }
+
+  function formatTime(sec){
+    const m = String(Math.floor(sec/60)).padStart(2,"0");
+    const s = String(sec%60).padStart(2,"0");
+    return `Tiempo restante: ${m}:${s}`;
+  }
+
+  // --- Lógica del botón Testimonio ---
+  const openTestimonioBtn = document.getElementById("openTestimonioBtn");
+  const testimonioModal = document.getElementById("testimonio-modal");
+  const closeTestimonio = document.getElementById("closeTestimonio");
+
+  openTestimonioBtn.addEventListener("click", ()=>{
+    testimonioModal.style.display = "flex";
+  });
+
+  closeTestimonio.addEventListener("click", ()=>{
+    testimonioModal.style.display = "none";
+  });
+})();
+</script>
+</body>
+</html>
+
+

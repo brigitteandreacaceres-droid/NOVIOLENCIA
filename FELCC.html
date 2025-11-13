@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FELCC — Denuncias por Departamento (paleta femenina)</title>
+  <style>
+    :root{
+      --bg:#fff;
+      --card:#f8f0ff;
+      --accent:#e07ca0;
+      --accent2:#c49de0;
+      --muted:#555;
+      --radius:12px;
+      --maxw:1200px;
+      --shadow:0 8px 24px rgba(224,124,160,0.08);
+    }
+    *{box-sizing:border-box}
+    body{
+      font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Arial;
+      margin:0; background:var(--bg); color:#07203b; display:flex; justify-content:center; padding:28px;
+    }
+    .wrap{width:100%; max-width:var(--maxw)}
+    header{display:flex; gap:16px; align-items:center; margin-bottom:18px}
+    .logo{
+      width:72px;height:72px;
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      border-radius:14px; display:flex; align-items:center; justify-content:center; color:#fff;
+    }
+    h1{font-size:20px;margin:0;color:var(--accent)}
+    p.lead{margin:6px 0 0;color:var(--muted)}
+    .intro{background:var(--card); padding:16px; border-radius:var(--radius); box-shadow:var(--shadow); margin-bottom:18px}
+    .departamentos{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:14px}
+    .dept-card{background:linear-gradient(180deg,#f9e8ff,#f3e0ff); border-radius:12px; padding:12px; box-shadow:0 6px 18px rgba(196,157,224,.06); cursor:pointer; transition:transform .18s, box-shadow .18s}
+    .dept-card:hover{transform:translateY(-6px); box-shadow:0 14px 36px rgba(196,157,224,.12)}
+    .dept-inner{display:flex; gap:12px; align-items:center}
+    .dept-icon{width:56px;height:56px; border-radius:10px; background:#fff; display:flex; align-items:center; justify-content:center; color:#000}
+    .dept-name{font-weight:800; color:var(--accent)}
+    .centros-wrap{margin-top:18px}
+    .center-card{display:flex; gap:12px; align-items:flex-start; background:var(--card); border-radius:10px; padding:12px; box-shadow:0 4px 16px rgba(196,157,224,.08); margin-bottom:12px; transition:box-shadow .16s, transform .16s}
+    .center-card:hover{box-shadow:0 12px 32px rgba(224,124,160,.12); transform:translateY(-4px)}
+    .center-icon{width:56px;height:56px;border-radius:10px;background:#fff; display:flex; align-items:center; justify-content:center; color:#000}
+    .center-info{flex:1}
+    .center-name{font-weight:800;margin:0;color:var(--accent)}
+    .center-addr{color:var(--muted);margin:6px 0}
+    .center-phone a{display:inline-block;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;padding:8px 10px;border-radius:8px;text-decoration:none;font-weight:700}
+    .center-actions{display:flex; gap:8px; align-items:center}
+    .modal{position:fixed; inset:0; display:none; align-items:center; justify-content:center; background:rgba(0,0,0,.45); z-index:999}
+    .modal.active{display:flex}
+    .modal-box{background:#fff; border-radius:10px; padding:18px; width:92%; max-width:640px; box-shadow:0 8px 28px rgba(224,124,160,.12)}
+    textarea{width:100%; min-height:120px; padding:10px; border-radius:8px; border:1px solid #ddd; font-family:inherit}
+    input[type=text]{width:100%;padding:8px;border-radius:8px;border:1px solid #ddd;margin-bottom:8px}
+    .btn{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border:none;padding:10px 14px;border-radius:8px;cursor:pointer;font-weight:800}
+    .btn.ghost{background:#fff;color:var(--accent);border:1px solid rgba(224,124,160,.12)}
+    .salir-btn{margin-top:12px;background:#ff6b6b;color:#fff;padding:10px 14px;border:none;border-radius:8px;font-weight:800;cursor:pointer}
+    footer{margin-top:18px;color:var(--muted);font-size:13px}
+    @media (max-width:640px){.departamentos{grid-template-columns:repeat(1,1fr)}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="logo" aria-hidden>
+        <!-- icono estilizado -->
+        <svg width="44" height="44" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L2 7v13h20V7L12 2zM11 14H9v2H7v-2H5v-2h2v-2h2v2h2v2zm1-7h2v2h-2V7z"/></svg>
+      </div>
+      <div>
+        <h1>FELCC — Denuncias por Departamento</h1>
+        <p class="lead">Haz clic en un departamento para ver el contacto departamental y la dirección publicada públicamente. Confirma siempre con la sede local antes de desplazarte.</p>
+      </div>
+    </header>
+
+    <section class="intro">
+      <strong>Atención:</strong> si estás en riesgo inmediato llama a la línea de emergencia nacional. Los datos abajo provienen de páginas oficiales (policía / direcciones departamentales / páginas institucionales).
+    </section>
+
+    <section class="departamentos" id="departamentos">
+      <div class="dept-card" onclick="abrirDept('laPaz')">
+        <div class="dept-inner">
+          <div class="dept-icon" aria-hidden><svg width="30" height="30" viewBox="0 0 24 24"><path fill="#000" d="M12 2L2 7v13h20V7L12 2z"/></svg></div>
+          <div><div class="dept-name">La Paz</div><div class="dept-desc">La Paz / El Alto</div></div>
+        </div>
+      </div>
+
+      <div class="dept-card" onclick="abrirDept('cochabamba')">
+        <div class="dept-inner">
+          <div class="dept-icon"><svg width="30" height="30" viewBox="0 0 24 24"><path fill="#000" d="M12 2L2 8v14h20V8L12 2z"/></svg></div>
+          <div><div class="dept-name">Cochabamba</div><div class="dept-desc">Cochabamba</div></div>
+        </div>
+      </div>
+
+      <div class="dept-card" onclick="abrirDept('santaCruz')">
+        <div class="dept-inner">
+          <div class="dept-icon"><svg width="30" height="30" viewBox="0 0 24 24"><path fill="#000" d="M12 3L4 8v12h16V8l-8-5z"/></svg></div>
+          <div><div class="dept-name">Santa Cruz</div><div class="dept-desc">Santa Cruz de la Sierra</div></div>
+        </div>
+      </div>
+
+      <div class="dept-card" onclick="abrirDept('oruro')">
+        <div class="dept-inner">
+          <div class="dept-icon"><svg width="30" height="30" viewBox="0 0 24 24"><path fill="#000" d="M12 2L2 7v13h20V7L12 2z"/></svg></div>
+          <div><div class="dept-name">Oruro</div><div class="dept-desc">Oruro</div></div>
+        </div>
+      </div>
+
+      <div class="dept-card" onclick="abrirDept('potosi')">
+        <div class="dept-inner">
+          <div class="dept-icon"><svg width="30" height="30" viewBox="0 0 24 24"><path fill="#000" d="M12 2L2 7v13h20V7L12 2z"/></svg></div>
+          <div><div class="dept-name">Potosí</div><div class="dept-desc">Potosí</div></div>
+        </div>
+      </div>
+
+      <div class="dept-card" onclick="abrirDept('tarija')">
+        <div class="dept-inner">
+          <div class="dept-icon"><svg width="30" height="30" viewBox="0 0 24 24"><path fill="#000" d="M12 3L4 8v12h16V8l-8-5z"/></svg></div>
+          <div><div class="dept-name">Tarija</div><div class="dept-desc">Tarija</div></div>
+        </div>
+      </div>
+
+      <div class="dept-card" onclick="abrirDept('chuquisaca')">
+        <div class="dept-inner">
+          <div class="dept-icon"><svg width="30" height="30" viewBox="0 0 24 24"><path fill="#000" d="M12 2L2 8v14h20V8L12 2z"/></svg></div>
+          <div><div class="dept-name">Chuquisaca (Sucre)</div><div class="dept-desc">Sucre</div></div>
+        </div>
+      </div>
+
+      <div class="dept-card" onclick="abrirDept('beni')">
+        <div class="dept-inner">
+          <div class="dept-icon"><svg width="30" height="30" viewBox="0 0 24 24"><path fill="#000" d="M12 3L4 8v12h16V8l-8-5z"/></svg></div>
+          <div><div class="dept-name">Beni</div><div class="dept-desc">Trinidad</div></div>
+        </div>
+      </div>
+
+      <div class="dept-card" onclick="abrirDept('pando')">
+        <div class="dept-inner">
+          <div class="dept-icon"><svg width="30" height="30" viewBox="0 0 24 24"><path fill="#000" d="M12 2L2 7v13h20V7L12 2z"/></svg></div>
+          <div><div class="dept-name">Pando</div><div class="dept-desc">Cobija</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="centros-wrap" id="centrosWrap"></section>
+
+    <button class="salir-btn" onclick="salir()">Salir de la página</button>
+
+    <footer>
+      <p>Fuentes: página institucional de la Policía de Bolivia y páginas departamentales / antecedentes. Confirma siempre con la sede local antes de desplazarte.</p>
+    </footer>
+  </div>
+
+  <div class="modal" id="modal">
+    <div class="modal-box">
+      <h2 id="modalTitle">Enviar denuncia</h2>
+      <p id="modalDept"></p>
+      <input id="denunciante" placeholder="Tu nombre (opcional)" />
+      <textarea id="denunciaText" placeholder="Escribe tu denuncia (opcionalmente anónimo)"></textarea>
+      <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:10px">
+        <button class="btn ghost" onclick="cerrarModal()">Cancelar</button>
+        <button class="btn" onclick="enviar()">Enviar</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Datos normalizados: todos los teléfonos visibles están en formato Bolivia (+591).
+    // Nota: algunos teléfonos publicados oficialmente son números departamentales sin prefijo;
+    // aquí se han mostrado con +591 como prefieres. Verifica localmente antes de publicar.
+    const data = {
+      laPaz: [
+        { name: 'FELCC La Paz - Dirección Departamental', addr: 'Av. Sucre 1122, La Paz (direccion publicada en perfil institucional)', phone: '+5912285384' },
+        { name: 'FELCC El Alto - Unidad', addr: 'Av. Antofagasta, Zona Satélite, El Alto (consultar sede local)', phone: '+5912812885' }
+      ],
+      cochabamba: [
+        { name: 'FELCC Cochabamba - Oficina Central', addr: 'Calle Titicaca, entre Mamá Ocllo y Estrecho de Tiquina, Cochabamba', phone: '+5914717944' }
+      ],
+      santaCruz: [
+        { name: 'FELCC Santa Cruz - Dirección Departamental', addr: 'Consultar sede departamental (Santa Cruz de la Sierra)', phone: '+5914584674' }
+      ],
+      oruro: [
+        { name: 'FELCC Oruro - Dirección Departamental', addr: 'Plaza 10 de Febrero (centro) - Oruro (referencia)', phone: '+5916050566' }
+      ],
+      potosi: [
+        { name: 'FELCC Potosí - Dirección Departamental', addr: 'Plaza 10 de Noviembre - Potosí (referencia)', phone: '+5916037275' }
+      ],
+      tarija: [
+        { name: 'FELCC Tarija - Dirección Departamental', addr: 'Plaza Luis de Fuentes y Vargas (centro) - Tarija (referencia)', phone: '+5916034883' }
+      ],
+      chuquisaca: [
+        { name: 'FELCC Chuquisaca - Dirección Departamental (Sucre)', addr: 'C. Junín, entre La Paz y ... (zona San Roque) - Sucre (ver antecedentes.policia.bo)', phone: '+59168614239 / +59165257799' }
+      ],
+      beni: [
+        { name: 'FELCC Beni - Dirección Departamental (Trinidad)', addr: 'Av. 6 de Agosto (centro) - Trinidad (referencia)', phone: '+5914669575' }
+      ],
+      pando: [
+        { name: 'FELCC Pando - Dirección Departamental (Cobija)', addr: 'Av. Mariscal Santa Cruz (centro) - Cobija (referencia)', phone: '+5915705881' }
+      ]
+    };
+
+    function abrirDept(deptKey){
+      const wrap = document.getElementById('centrosWrap'); wrap.innerHTML='';
+      const list = data[deptKey]; if(!list) return;
+      const title = document.createElement('h2');
+      title.innerText = deptKey === 'laPaz' ? 'La Paz (La Paz y El Alto)' : capitalize(deptKey);
+      title.style.color='var(--accent)'; title.style.marginTop='18px';
+      wrap.appendChild(title);
+
+      list.forEach(c=>{
+        const card = document.createElement('div'); card.className='center-card';
+        // Build tel href: remove non-digits, keep leading country code 591
+        let phoneText = c.phone || 'Consultar sede local';
+        // For display we keep slashes or spaces; for href we take first numeric group
+        const firstNumber = (phoneText.split('/')[0]||phoneText).replace(/\D/g,'');
+        const href = firstNumber ? ('tel:+' + firstNumber.replace(/^591?/, function(m){ return m; })) : '#';
+        const phoneHtml = phoneText.indexOf('Consultar') === -1 ? `<a href="${href}">${escapeHtml(phoneText)}</a>` : escapeHtml(phoneText);
+
+        card.innerHTML = `
+          <div class="center-icon" aria-hidden>
+            <svg width="32" height="32" viewBox="0 0 24 24"><path fill="#000" d="M12 2L2 7v13h20V7L12 2z"/></svg>
+          </div>
+          <div class="center-info">
+            <p class="center-name">${escapeHtml(c.name)}</p>
+            <p class="center-addr">📍 ${escapeHtml(c.addr)}</p>
+            <p class="center-phone">☎️ ${phoneHtml}</p>
+          </div>
+          <div class="center-actions">
+            <button class="btn" onclick="abrirModal('${escapeJs(c.name)}')">Entrar / Denunciar</button>
+          </div>`;
+        wrap.appendChild(card);
+      });
+
+      title.scrollIntoView({behavior:'smooth', block:'start'});
+    }
+
+    function abrirModal(estacion){
+      document.getElementById('modalTitle').innerText = 'Denuncia — '+estacion;
+      document.getElementById('modalDept').innerText = 'Escribe tu mensaje (puedes mantenerte anónimo).';
+      document.getElementById('modal').classList.add('active');
+    }
+    function cerrarModal(){ document.getElementById('modal').classList.remove('active'); document.getElementById('denunciaText').value=''; document.getElementById('denunciante').value=''; }
+    function enviar(){ const nombre=document.getElementById('denunciante').value.trim(); const msg=document.getElementById('denunciaText').value.trim(); if(!msg){alert('Escribe la denuncia antes de enviar.'); return;} cerrarModal(); alert('Denuncia enviada (simulada). Si es emergencia, llama a la línea de emergencias.'); }
+    function capitalize(s){ return s.charAt(0).toUpperCase()+s.slice(1); }
+    function escapeHtml(text){ if(text===undefined||text===null) return ''; return String(text).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"}[c]; }); }
+    function escapeJs(text){ return String(text||'').replace(/'/g,"\\'"); }
+    function salir(){ try{ window.close(); }catch(e){ /* popup close may be blocked */ } }
+    // abrir La Paz por defecto
+    abrirDept('laPaz');
+  </script>
+</body>
+</html>

@@ -1,0 +1,197 @@
+/* ----------- ENTRADA INICIAL ----------- */
+#entrada {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  text-align: center;
+  z-index: 9999;
+  overflow: hidden;
+  background: radial-gradient(circle at center, #ffe4f2 0%, #f6c6ff 100%);
+}
+
+#videoFondo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+  filter: brightness(0.7) contrast(1.1);
+}
+
+#entrada h1 {
+  font-size: 4rem;
+  font-weight: 800;
+  color: #c752a5;
+  text-shadow: 0 0 20px #ff99cc, 0 0 50px #ffb3e6, 0 0 80px #ffc6f7;
+  animation: flotarEntrada 5s ease-in-out infinite;
+}
+
+@keyframes flotarEntrada {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+
+#entrada p {
+  font-size: 1.6rem;
+  margin: 20px;
+  color: #663366;
+  text-shadow: 0 0 15px #ffd6f9, 0 0 35px #e0a8f5;
+  animation: aparecerTexto 3s ease-in-out;
+}
+
+@keyframes aparecerTexto {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+#entrada button {
+  margin-top: 2rem;
+  padding: 1rem 3rem;
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #fff;
+  background: linear-gradient(145deg, #f7a8d8, #b58cf2);
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  box-shadow: 0 10px 20px rgba(250, 140, 200, 0.4),
+              inset 0 -4px 10px rgba(0,0,0,0.2);
+  perspective: 1000px;
+  transform-style: preserve-3d;
+}
+
+#entrada button:hover {
+  transform: translateY(-5px) scale(1.05) rotateX(10deg);
+  background: linear-gradient(145deg, #ffd3f5, #c6a9ff);
+  box-shadow: 0 0 30px #ffb8f0, 0 0 60px #ffc6ff;
+}
+
+/* Ocultar contenido principal al inicio */
+#contenido {
+  display: none;
+}
+
+/* ----------- PÁGINA PRINCIPAL FEMENINA SUAVE ----------- */
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(180deg, #fff4fb 0%, #ffd6f8 40%, #f5c2f2 70%, #e0b7f5 100%);
+  color: #663366;
+  margin: 0;
+  overflow-x: hidden;
+  animation: flotarFondo 6s ease-in-out infinite;
+}
+
+@keyframes flotarFondo {
+  0%, 100% { background-position: 0 0; }
+  50% { background-position: 0 20px; }
+}
+
+/* ---------- ENCABEZADO ---------- */
+header {
+  background: linear-gradient(90deg, #f2b8e8, #e7a6ff, #ffd1f9);
+  color: #fff;
+  text-align: center;
+  padding: 3rem 1rem;
+  box-shadow: 0 0 40px rgba(240, 150, 230, 0.6);
+  position: relative;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+header img {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  width: 120px;
+  border-radius: 15px;
+  animation: flotarLogo 4s ease-in-out infinite;
+  box-shadow: 0 0 25px rgba(255, 150, 240, 0.7);
+}
+
+@keyframes flotarLogo {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+header h1 {
+  font-size: 3.5rem;
+  font-weight: 900;
+  letter-spacing: 2px;
+  background: linear-gradient(45deg, #fff, #ffb8f0, #e4aaff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 30px #ffd6fa;
+}
+
+/* ---------- NAVEGACIÓN ---------- */
+nav {
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(15px);
+  box-shadow: 0 0 25px rgba(255, 180, 240, 0.4);
+  text-align: center;
+  padding: 1rem;
+}
+
+nav a {
+  color: #a54bb5;
+  font-weight: 600;
+  padding: 15px 25px;
+  margin: 0 5px;
+  display: inline-block;
+  text-decoration: none;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+nav a:hover {
+  color: #fff;
+  background: linear-gradient(90deg, #f7a8d8, #b58cf2);
+  box-shadow: 0 0 25px rgba(230, 150, 240, 0.8);
+  transform: translateY(-3px) scale(1.05);
+}
+
+/* ---------- CUERPO PRINCIPAL ---------- */
+main {
+  padding: 3rem 2rem;
+  text-align: center;
+}
+
+.floating-card {
+  display: inline-block;
+  background: rgba(255, 240, 250, 0.8);
+  padding: 2rem;
+  margin: 1.5rem;
+  border-radius: 25px;
+  width: 300px;
+  color: #663366;
+  box-shadow: 0 10px 30px rgba(230, 180, 240, 0.4),
+              inset 0 0 20px rgba(255, 200, 255, 0.3);
+  transition: all 0.4s ease;
+  transform: perspective(800px) rotateY(0deg);
+}
+
+.floating-card:hover {
+  transform: perspective(800px) rotateY(10deg) translateY(-10px);
+  box-shadow: 0 0 40px rgba(240, 190, 250, 0.8),
+              0 0 80px rgba(230, 160, 250, 0.6);
+}
+
+/* ---------- PIE DE PÁGINA ---------- */
+footer {
+  background: linear-gradient(180deg, #f7c7f5 0%, #e8bdf0 50%, #ffdff7 100%);
+  color: #663366;
+  text-align: center;
+  padding: 1rem 0;
+  margin-top: 3rem;
+  box-shadow: 0 -5px 25px rgba(250, 190, 240, 0.4);
+  border-top: 2px solid rgba(255,255,255,0.2);
+}

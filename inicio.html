@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Diagnóstico - No a la Violencia</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      color: #333;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* ===== VIDEO DE FONDO ===== */
+    #video-fondo {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+      opacity: 0.25;
+    }
+
+    header {
+      text-align: center;
+      background-color: rgba(255, 51, 102, 0.8);
+      color: white;
+      padding: 20px 10px;
+      backdrop-filter: blur(5px);
+      z-index: 1;
+      position: relative;
+    }
+
+    main {
+      max-width: 850px;
+      margin: 30px auto;
+      background: transparent;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      position: relative;
+      z-index: 1;
+    }
+
+    li {
+      list-style: decimal;
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    .pregunta {
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    input[type="radio"] {
+      margin-right: 8px;
+    }
+
+    button {
+      background-color: #ff3366;
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: 0.3s ease;
+      margin: 5px;
+    }
+
+    button:hover {
+      background-color: #e62e5c;
+      transform: scale(1.05);
+    }
+
+    #resultado {
+      margin-top: 20px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    footer {
+      text-align: center;
+      padding: 15px;
+      background-color: rgba(255, 51, 102, 0.8);
+      color: white;
+      margin-top: 30px;
+      backdrop-filter: blur(5px);
+      position: relative;
+      z-index: 1;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- 🎥 VIDEO DE FONDO -->
+  <video autoplay muted loop id="video-fondo">
+    <source src="burbuja.mp4" type="video/mp4">
+    Tu navegador no soporta el video de fondo.
+  </video>
+
+  <header>
+    <h1>Diagnóstico: No a la Violencia</h1>
+    <p>Evalúa tus conocimientos y actitudes sobre la violencia y la convivencia pacífica</p>
+  </header>
+
+  <main>
+    <form id="quizForm">
+      <ol>
+        <li>
+          <div class="pregunta">
+            <span>¿Cuál de las siguientes acciones representa un acto de violencia?</span>
+          </div>
+          <input type="radio" name="p1" value="malo" /> Escuchar con respeto<br />
+          <input type="radio" name="p1" value="bueno" /> Insultar o humillar a otra persona<br />
+          <input type="radio" name="p1" value="malo" /> Ayudar a un compañero<br />
+          <input type="radio" name="p1" value="malo" /> Mostrar empatía<br />
+        </li>
+        <li>
+          <div class="pregunta">
+            <span>Si observas a alguien siendo agredido, ¿qué deberías hacer?</span>
+          </div>
+          <input type="radio" name="p2" value="malo" /> Ignorar la situación<br />
+          <input type="radio" name="p2" value="bueno" /> Buscar ayuda o avisar a un adulto o autoridad<br />
+          <input type="radio" name="p2" value="malo" /> Grabar el incidente<br />
+          <input type="radio" name="p2" value="malo" /> Huir sin decir nada<br />
+        </li>
+        <li>
+          <div class="pregunta">
+            <span>¿Cuáles son los tipos más comunes de violencia?</span>
+          </div>
+          <input type="radio" name="p3" value="bueno" /> Física, verbal, psicológica y sexual<br />
+          <input type="radio" name="p3" value="malo" /> Solo física<br />
+          <input type="radio" name="p3" value="malo" /> Solo en redes sociales<br />
+          <input type="radio" name="p3" value="malo" /> Solo entre adultos<br />
+        </li>
+        <li>
+          <div class="pregunta">
+            <span>¿Cuál es una forma efectiva de prevenir la violencia?</span>
+          </div>
+          <input type="radio" name="p4" value="bueno" /> Fomentar el diálogo y el respeto<br />
+          <input type="radio" name="p4" value="malo" /> Responder con agresión<br />
+          <input type="radio" name="p4" value="malo" /> Ignorar los problemas<br />
+          <input type="radio" name="p4" value="malo" /> Aislarse de los demás<br />
+        </li>
+        <li>
+          <div class="pregunta">
+            <span>¿El acoso escolar (bullying) es violencia?</span>
+          </div>
+          <input type="radio" name="p5" value="bueno" /> Sí, causa daño físico o emocional<br />
+          <input type="radio" name="p5" value="malo" /> No, es una simple broma<br />
+          <input type="radio" name="p5" value="malo" /> Solo si hay golpes<br />
+          <input type="radio" name="p5" value="malo" /> Solo si pasa en internet<br />
+        </li>
+        <li>
+          <div class="pregunta">
+            <span>¿Qué deberías hacer ante un insulto?</span>
+          </div>
+          <input type="radio" name="p6" value="bueno" /> Mantener la calma y pedir ayuda<br />
+          <input type="radio" name="p6" value="malo" /> Responder con otro insulto<br />
+          <input type="radio" name="p6" value="malo" /> Vengarte después<br />
+          <input type="radio" name="p6" value="malo" /> Ignorarlo siempre sin hablar con nadie<br />
+        </li>
+        <li>
+          <div class="pregunta">
+            <span>¿Quiénes sufren cuando hay violencia en casa?</span>
+          </div>
+          <input type="radio" name="p7" value="bueno" /> Todos los miembros de la familia<br />
+          <input type="radio" name="p7" value="malo" /> Solo quien recibe golpes<br />
+          <input type="radio" name="p7" value="malo" /> Solo los niños<br />
+          <input type="radio" name="p7" value="malo" /> Solo los adultos<br />
+        </li>
+        <li>
+          <div class="pregunta">
+            <span>¿Qué valor es fundamental para evitar la violencia?</span>
+          </div>
+          <input type="radio" name="p8" value="bueno" /> La empatía<br />
+          <input type="radio" name="p8" value="malo" /> La venganza<br />
+          <input type="radio" name="p8" value="malo" /> El rencor<br />
+          <input type="radio" name="p8" value="malo" /> La indiferencia<br />
+        </li>
+        <li>
+          <div class="pregunta">
+            <span>Si un amigo te confiesa que sufre violencia, ¿qué haces?</span>
+          </div>
+          <input type="radio" name="p9" value="bueno" /> Escucharlo y ayudarlo a buscar apoyo<br />
+          <input type="radio" name="p9" value="malo" /> Contarlo a otros sin permiso<br />
+          <input type="radio" name="p9" value="malo" /> Ignorarlo<br />
+          <input type="radio" name="p9" value="malo" /> Decirle que lo resuelva solo<br />
+        </li>
+        <li>
+          <div class="pregunta">
+            <span>¿Qué valores promueve BRI-X-TAC?</span>
+          </div>
+          <input type="radio" name="p10" value="bueno" /> Respeto, igualdad y cultura de paz<br />
+          <input type="radio" name="p10" value="malo" /> La venganza<br />
+          <input type="radio" name="p10" value="malo" /> El odio<br />
+          <input type="radio" name="p10" value="malo" /> La indiferencia<br />
+        </li>
+        <li>
+          <div class="pregunta">
+            <span>¿Cómo puedes demostrar respeto hacia otros?</span>
+          </div>
+          <input type="radio" name="p11" value="bueno" /> Escuchando y valorando opiniones<br />
+          <input type="radio" name="p11" value="malo" /> Ignorando lo que dicen<br />
+          <input type="radio" name="p11" value="malo" /> Burlándose de sus errores<br />
+          <input type="radio" name="p11" value="malo" /> Obligándolos a hacer lo que quieres<br />
+        </li>
+        <li>
+          <div class="pregunta">
+            <span>¿Qué es importante para resolver conflictos de manera pacífica?</span>
+          </div>
+          <input type="radio" name="p12" value="bueno" /> Hablar y escuchar<br />
+          <input type="radio" name="p12" value="malo" /> Ignorar a la otra persona<br />
+          <input type="radio" name="p12" value="malo" /> Atacar con insultos<br />
+          <input type="radio" name="p12" value="malo" /> Amenazar<br />
+        </li>
+        <li>
+          <div class="pregunta">
+            <span>Ayudar a otros en problemas es:</span>
+          </div>
+          <input type="radio" name="p13" value="bueno" /> Una forma de prevenir violencia<br />
+          <input type="radio" name="p13" value="malo" /> Una pérdida de tiempo<br />
+          <input type="radio" name="p13" value="malo" /> Solo para amigos<br />
+          <input type="radio" name="p13" value="malo" /> Incorrecto<br />
+        </li>
+        <li>
+          <div class="pregunta">
+            <span>Denunciar una agresión es:</span>
+          </div>
+          <input type="radio" name="p14" value="bueno" /> Correcto y necesario<br />
+          <input type="radio" name="p14" value="malo" /> Malo y peligroso<br />
+          <input type="radio" name="p14" value="malo" /> Irrelevante<br />
+          <input type="radio" name="p14" value="malo" /> Solo para adultos<br />
+        </li>
+        <li>
+          <div class="pregunta">
+            <span>La cultura de paz implica:</span>
+          </div>
+          <input type="radio" name="p15" value="bueno" /> Respetar, dialogar y ayudar<br />
+          <input type="radio" name="p15" value="malo" /> Resolver todo con violencia<br />
+          <input type="radio" name="p15" value="malo" /> Ignorar los problemas<br />
+          <input type="radio" name="p15" value="malo" /> Solo preocuparse por uno mismo<br />
+        </li>
+      </ol>
+
+      <div style="text-align:center;">
+        <button type="button" onclick="evaluar()">Enviar respuestas</button>
+        <button type="button" onclick="window.history.back()">Atrás</button>
+      </div>
+    </form>
+
+    <div id="resultado"></div>
+  </main>
+
+  <footer>
+    <p>© 2025 BRI-X-TAC | Diagnóstico educativo</p>
+  </footer>
+
+  <script>
+    function evaluar() {
+      const respuestas = document.querySelectorAll('input[type="radio"]:checked');
+      let correctas = 0;
+      respuestas.forEach(r => {
+        if (r.value === "bueno") correctas++;
+      });
+
+      const total = 15;
+      const resultado = document.getElementById("resultado");
+
+      resultado.innerHTML = `Tu puntaje: ${correctas} de ${total}<br>` +
+        (correctas >= 12 ? "✅ ¡Excelente! Promueves la paz y el respeto." :
+        correctas >= 8 ? "🙂 Buen trabajo, pero aún puedes mejorar." :
+        "⚠️ Debes reflexionar más sobre la importancia de evitar la violencia.");
+    }
+  </script>
+
+<button id="backBtn" onclick="history.back()">⬅️ Volver Atrás</button>
+
+
+</body>
+</html>
+
+

@@ -1,0 +1,235 @@
+<div class="container">
+  <!-- Datos y Ubicación -->
+  <div class="card">
+    <h2>📍 Datos y Ubicación</h2>
+    <p><strong>Nombre del Proyecto:</strong> BRI-X-TAC</p>
+    <p><strong>Dirección:</strong> Zona Plan 3000, Barrio Santa Elena</p>
+    <p><strong>Teléfono:</strong> +519 74137655</p>
+    <p><strong>Correo:</strong> <a href="mailto:contacto@brixtac.org">contacto@brixtac.org</a></p>
+    <p><strong>Sitio Web:</strong> <a href="https://www.brixtac.org" target="_blank">www.brixtac.org</a></p>
+    <p><strong>Horario:</strong> Lunes a Viernes, de 9:00 a 18:00 hrs</p>
+  </div>
+
+  <!-- Sobre las Autoras -->
+  <div class="card">
+    <h3>✍️ Sobre la Autora</h3>
+    <p><strong>Nombre:</strong> Brigitte Andrea Caceres Rafael</p>
+    <p><strong>Nombre:</strong> Tania Peralta Miranda</p>
+    <p><strong>Rol:</strong> Fundadora y creadora de contenido de BRI-X-TAC</p>
+    <p><strong>Descripción:</strong> Somos educadoras apasionadas por la paz, la igualdad y la transformación social. Creando materiales que inspiren, eduquen y promuevan la prevención de la violencia.</p>
+    <p><strong>Contacto directo:</strong> <a href="brigitte.andrea.caceres.rafael@gmail.com">brigitte.andrea.caceres.rafael@gmail.com</a></p>
+  </div>
+
+  <!-- Formulario -->
+  <div class="card">
+    <h3>📝 Ingresa tus Datos</h3>
+    <form action="#" method="post" class="user-form">
+      <label for="nombre">Nombre completo:</label>
+      <input type="text" id="nombre" name="nombre" placeholder="Escribe tu nombre" required>
+
+      <label for="correo">Correo electrónico:</label>
+      <input type="email" id="correo" name="correo" placeholder="ejemplo@correo.com" required>
+
+      <label for="mensaje">Mensaje o motivo de contacto:</label>
+      <textarea id="mensaje" name="mensaje" rows="4" placeholder="Escribe tu mensaje aquí..." required></textarea>
+
+      <button type="submit">Enviar</button>
+    </form>
+  </div>
+
+  <!-- Mapa -->
+  <div class="card">
+    <h3>📌 Encuéntranos aquí:</h3>
+    <img src="mapa.png" alt="Ubicación de BRI-X-TAC">
+    <a href="https://maps.app.goo.gl/AW5buracFwxBchQo7" target="_blank">👉 Ver en Google Maps y cómo llegar</a>
+  </div>
+</div>
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #fdf6fc;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .container {
+    width: 100%;
+    max-width: 850px;
+  }
+
+  .card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 25px 30px;
+    margin-bottom: 25px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    transition: transform 0.3s, box-shadow 0.3s;
+    border-left: 6px solid;
+    border-image: linear-gradient(45deg, #ff66b2, #b266ff) 1;
+  }
+
+  .card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.12);
+  }
+
+  h2, h3 {
+    color: #ff66b2;
+    background: linear-gradient(90deg, #ff66b2, #b266ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 15px;
+  }
+
+  p {
+    color: #333;
+    line-height: 1.6;
+    margin-bottom: 8px;
+  }
+
+  a {
+    color: #b266ff;
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  a:hover {
+    color: #ff66b2;
+    text-decoration: underline;
+  }
+
+  .user-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  .user-form input, .user-form textarea {
+    padding: 10px;
+    border: 2px solid #b266ff;
+    border-radius: 8px;
+    font-size: 1rem;
+    background: #fff0fc;
+    color: #000;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+
+  .user-form input:focus, .user-form textarea:focus {
+    border-color: #ff66b2;
+    box-shadow: 0 0 8px rgba(255,102,178,0.3), 0 0 12px rgba(178,102,255,0.3);
+    outline: none;
+  }
+
+  .user-form button {
+    background: linear-gradient(45deg, #ff66b2, #b266ff);
+    color: #fff;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s, box-shadow 0.3s;
+  }
+
+  .user-form button:hover {
+    background: linear-gradient(45deg, #b266ff, #ff66b2);
+    box-shadow: 0 6px 20px rgba(178,102,255,0.3), 0 6px 24px rgba(255,102,178,0.3);
+  }
+
+  .card img {
+    width: 100%;
+    border-radius: 12px;
+    margin-top: 10px;
+    box-shadow: 0 6px 15px rgba(178,102,255,0.2), 0 6px 15px rgba(255,102,178,0.2);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+
+  .card img:hover {
+    transform: scale(1.03);
+    box-shadow: 0 8px 20px rgba(178,102,255,0.3), 0 8px 20px rgba(255,102,178,0.3);
+  }
+
+  .card a {
+    display: block;
+    text-align: center;
+    margin-top: 10px;
+    font-weight: bold;
+    transition: color 0.3s;
+  }
+
+  .card a:hover {
+    color: #ff66b2;
+  }
+
+
+
+
+/*Estilos generales del boton whatsapp*/
+.whatsapp-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: #25D366;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  animation: breathe 2s ease-in-out infinite;
+}
+
+/*Estilos solo al icono whatsapp*/
+.whatsapp-btn i {
+  color: #fff;
+  font-size: 24px;
+  animation: beat 2s ease-in-out infinite;
+  text-decoration: none;
+}
+
+/*Estilos con animation contorno respirando*/
+@keyframes breathe {
+  0% {
+    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.5);
+  }
+  70% {
+    box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  }
+}
+
+/*Estilos de animacion del icono latiendo*/
+@keyframes beat {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+
+
+
+</style>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+<a href="https://wa.me/+59174137655?text=Brigitte Andrea Caceres Rafael" target=”_blank” class="whatsapp-btn">
+  <i class="bi bi-whatsapp"></i>
+</a>
+
+
+
+
